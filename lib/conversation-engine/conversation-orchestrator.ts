@@ -15,7 +15,7 @@ import { ServiceData } from '../database/models/service';
 import { ParsedMessage } from '../cross-channel-interfaces/standardized-conversation-interface';
 import { UserContext } from '../database/models/user-context';
 import { BotResponse } from '../cross-channel-interfaces/standardized-conversation-interface';
-import { analyzeConversationIntent, AnalyzedIntent } from './llm-actions/chat-interactions/functions/intention-detector';
+import { analyzeConversationIntents, getFallbackIntent, AnalyzedIntent } from './llm-actions/chat-interactions/functions/intention-detector';
 import { processTurn } from './state-manager';
 import { ChatMessage } from '../database/models/chat-session';
 import { OpenAIChatMessage } from './llm-actions/chat-interactions/openai-config/openai-core';
@@ -65,7 +65,8 @@ export async function routeInteraction(
         return { finalBotResponse: errorResponse, updatedContext: userContext, history };
     }
 
-    let analyzedIntent: AnalyzedIntent;
+    let detectedIntents: AnalyzedIntent[];
+    let primaryIntent: AnalyzedIntent;
     const userMessage = parsedMessage.text || '';
 
     // --- Intent Detection Bypass Logic ---
@@ -76,22 +77,22 @@ export async function routeInteraction(
 
     if (userMessage && serviceIds.includes(userMessage)) {
         console.log('[Orchestrator] Service ID detected in message. Bypassing LLM intent analysis.');
-        // Manually construct the intent, as we know exactly what the user wants.
-        analyzedIntent = {
+        detectedIntents = [{
             goalType: 'serviceBooking',
             goalAction: 'create',
             contextSwitch: false,
             confidence: 1.0,
             extractedInformation: { serviceId: userMessage }
-        };
+        }];
     } else {
-        // If it's not a service ID, proceed with normal LLM-based intent analysis.
-        console.log('[Orchestrator] No service ID match. Proceeding with LLM intent analysis.');
+        console.log('[Orchestrator] No service ID match. Proceeding with intent analysis.');
         const historyForAI = mapHistoryForAI(history);
-        analyzedIntent = await analyzeConversationIntent(userMessage, historyForAI, userContext);
+        detectedIntents = await analyzeConversationIntents(userMessage, historyForAI, userContext);
     }
-    
-    console.log(`[Orchestrator] Intent Analysis Complete:`, JSON.stringify(analyzedIntent, null, 2));
+
+    primaryIntent = detectedIntents[0] || getFallbackIntent();
+
+    console.log(`[Orchestrator] Intent Analysis Complete:`, JSON.stringify(detectedIntents, null, 2));
 
     // --- Unified Agent Pipeline ---
     // Instead of branching for FAQ vs. Goal, we now run a unified pipeline for every message.
@@ -109,7 +110,7 @@ export async function routeInteraction(
     // 2. Always process the state manager to understand the current task status.
     const taskContext = await processTurn(
         userContext,
-        analyzedIntent,
+        primaryIntent,
         userMessage,
         parsedMessage.businessWhatsappNumber
     );
@@ -118,7 +119,7 @@ export async function routeInteraction(
     // --- Proactive Step Logic ---
     // If the agent is about to answer a question outside of a flow, prepare the service
     // buttons and add them to the context so the agent can introduce them properly.
-    if (analyzedIntent.goalType === 'frequentlyAskedQuestion' && !taskContext.currentGoal) {
+    if (primaryIntent.goalType === 'frequentlyAskedQuestion' && !taskContext.currentGoal) {
         console.log('[Orchestrator] Proactively preparing service buttons for the agent.');
         try {
             if (services && services.length > 0) {
@@ -147,7 +148,7 @@ export async function routeInteraction(
     const validationFailureReason =
       taskContext.currentGoal?.collectedData?.validationFailureReason;
     const isNewBookingFlow =
-      analyzedIntent.goalType === 'serviceBooking' &&
+      primaryIntent.goalType === 'serviceBooking' &&
       (!userContext.currentGoal || userContext.currentGoal.currentStepIndex === 0);
 
     if (validationFailureReason === 'NOT_FOUND' && isNewBookingFlow) {
