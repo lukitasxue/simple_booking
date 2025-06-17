@@ -1,3 +1,4 @@
+
 export type IntentType =
   | 'serviceBooking'
   | 'frequentlyAskedQuestion'
@@ -6,13 +7,12 @@ export type IntentType =
   | 'unknown';
 
 export interface DetectedIntent {
-  type: IntentType;
+  type: string;
+
   entities?: Record<string, string>;
 }
 
-/**
- * Basic rule-based multi-intent classifier used during the refactor.
- */
+
 export function detectIntents(text: string): DetectedIntent[] {
   if (!text) return [];
   const normalized = text.toLowerCase();
@@ -35,4 +35,5 @@ export function detectIntents(text: string): DetectedIntent[] {
   }
 
   return intents;
+
 }
