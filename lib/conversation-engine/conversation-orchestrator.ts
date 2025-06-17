@@ -24,6 +24,7 @@ import { generateAgentResponse } from './llm-actions/llm-response-generator';
 import { Business } from '../database/models/business';
 import { Service } from '../database/models/service';
 import { BookingButtonGenerator } from './flows/bookings/customer-booking-steps';
+import { DialogueStateManager } from '@agent/state-manager';
 
 export interface OrchestratorResult {
     finalBotResponse: BotResponse;
@@ -56,6 +57,8 @@ export async function routeInteraction(
     userContext: UserContext,
     history: ChatMessage[]
 ): Promise<OrchestratorResult> {
+
+    const newStateManager = new DialogueStateManager();
 
     // A businessId is critical for all subsequent operations.
     const businessId = userContext.businessId;
@@ -91,6 +94,9 @@ export async function routeInteraction(
     }
 
     primaryIntent = detectedIntents[0] || getFallbackIntent();
+
+    newStateManager.updateFromIntents(detectedIntents);
+    console.log('[Orchestrator] Active goals:', JSON.stringify(newStateManager.getGoals()));
 
     console.log(`[Orchestrator] Intent Analysis Complete:`, JSON.stringify(detectedIntents, null, 2));
 

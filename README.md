@@ -58,3 +58,10 @@ returns a list of detected intents. The orchestrator currently uses the
 first intent for state processing while the rest will be handled in
 future phases.
 
+### Phase 3 – Slot-Based Dialogue State
+
+`DialogueStateManager` introduces a simple goal+slot model. Detected
+intents are converted into goals with slots like `service`, `date` and
+`time` for bookings. The manager updates slot values whenever new
+entities are found so multiple intents can progress in parallel.
+
