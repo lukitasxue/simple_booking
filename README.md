@@ -33,3 +33,27 @@
 ## Demo
 
 You can view a fully working demo at [skedy.io](https://skedy.io/).
+
+## Multi-Intent Refactor
+
+The codebase is being restructured to support multiple intents per user message and a more flexible conversation flow.  Phase 1 introduces a new module skeleton under `src/agent` which will house the future architecture:
+
+```
+src/agent/
+  preprocessor/        // normalizes incoming text
+  context/             // stores conversation history
+  intent-classifier/   // detects multiple intents
+  state-manager/       // tracks active goals and slots
+  tasks/               // intent specific handlers
+  llm-response/        // combines outputs using LLM
+  whatsapp-renderer/   // formats responses for WhatsApp
+```
+
+These folders currently contain placeholder implementations and will be expanded in later phases.
+
+### Phase 2 – Multi-Intent Detection
+
+`analyzeConversationIntents` replaces the old single-intent analyzer and
+returns a list of detected intents. The orchestrator currently uses the
+first intent for state processing while the rest will be handled in
+future phases.
