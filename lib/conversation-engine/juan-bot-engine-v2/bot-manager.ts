@@ -2,13 +2,13 @@ import { Business } from "@/lib/database/models/business";
 import { extractSessionHistoryAndContext } from "@/lib/conversation-engine/llm-actions/chat-interactions/functions/extract-history-and-context.ts";
 import { ChatMessage } from "@/lib/database/models/chat-session";
 import { UserContext } from "@/lib/database/models/user-context";
-import { IntelligentLLMService } from '@/lib/Juan-bot-engine/services/intelligent-llm-service';
+import { IntelligentLLMService } from './services/intelligent-llm-service';
 import { BotResponse } from "@/lib/cross-channel-interfaces/standardized-conversation-interface";
 import { 
   getOrCreateChatContext, 
   persistSessionState,
   START_BOOKING_PAYLOAD 
-} from '@/lib/Juan-bot-engine/bot-manager-helpers';
+} from './bot-manager-helpers';
 
 // --- Core Type Definitions ---
 export type ConversationalParticipantType = 'business' | 'customer';
@@ -112,7 +112,7 @@ export const conversationFlowBlueprints: Record<string, string[]> = {
 };
 
 // Import step handlers
-import { getBusinessEmailHandler } from '@/lib/Juan-bot-engine/step-handlers/business-account-steps';
+import { getBusinessEmailHandler } from './step-handlers/business-account-steps';
 import { 
     askAddressHandler,
     validateAddressHandler,
@@ -136,7 +136,7 @@ import {
     // Other handlers
     askEmailHandler,
     createBookingHandler,
-} from '@/lib/Juan-bot-engine/step-handlers/customer-booking-steps';
+} from './step-handlers/customer-booking-steps';
 
 export const botTasks: Record<string, IndividualStepHandler> = {
   getBusinessEmail: getBusinessEmailHandler,

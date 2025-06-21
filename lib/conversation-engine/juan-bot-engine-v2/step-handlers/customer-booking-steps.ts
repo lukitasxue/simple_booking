@@ -285,7 +285,7 @@ class AvailabilityService {
   // Gets the actual user UUID by looking up which business owns this WhatsApp number
   static async findUserIdByBusinessWhatsappNumber(businessWhatsappNumber: string, chatContext: ChatContext): Promise<string | null> {
     try {
-      
+      // --- START MODIFICATION: Find user by hardcoded business ID ---
       const businessId = chatContext.currentParticipant.associatedBusinessId;
       if (!businessId) {
         console.error('[AvailabilityService] No business ID found in context for user lookup.');

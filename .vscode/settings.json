@@ -83,6 +83,54 @@
         {
             "folderPath": "simple_booking\\lib\\conversation-engine\\flows\\",
             "color": "foldercolorizer.color_66cc00"
+        },
+        {
+            "folderPath": "simple_booking\\app\\api\\webhook2\\",
+            "color": "foldercolorizer.color_ffccff"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\conversation-engine\\v3\\",
+            "color": "foldercolorizer.color_cc3399"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\conversation-engine\\juan-bot-engine-copy\\",
+            "color": "foldercolorizer.color_ffccff"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\conversation-engine\\juan-bot-engine-v2\\",
+            "color": "foldercolorizer.color_9999ff"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\conversation-engine\\escalation\\",
+            "color": "foldercolorizer.color_6666ff"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\bot-manager.ts\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\bot-manager-helpers.ts\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\step-handlers\\faq-handler.ts\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\step-handlers\\business-account-steps.ts\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\step-handlers\\customer-booking-steps.ts\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\step-handlers\\booking-utilities.ts\\",
+            "badge": "😀"
+        },
+        {
+            "folderPath": "simple_booking\\lib\\Juan-bot-engine\\services\\intelligent-llm-service.ts\\",
+            "badge": "😀"
         }
     ]
 }
