@@ -17,13 +17,6 @@
 </p>
 <br/>
 
-## Features
-
-  - AI WhatsApp agent 24/7
-  - Booking management from whatsapp or from a website
-  - Uber-like dynamic quoting
-  - Calendar Management
-
 ## Demo
 
 <p align="center">
@@ -31,5 +24,13 @@
     <img width="200" src="https://lucasxueportfolio.netlify.app/blog/skedy/skedy-whatsapp-booking.png" alt="Skedy demo">
   </a>
 </p>
+
+## Features
+
+  - AI WhatsApp agent 24/7
+  - Booking management from whatsapp or from a website
+  - Uber-like dynamic quoting
+  - Calendar Management
+
 
 
