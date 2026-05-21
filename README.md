@@ -1,9 +1,3 @@
-<p align="center">
-  <a href="https://skedy.io/">
-    <img width="200" src="https://lucasxueportfolio.netlify.app/blog/skedy/skedy-whatsapp-booking.png" alt="Skedy demo">
-  </a>
-</p>
-
 <h3 align="center">
   Skedy is an AI WhatsApp agent that helps service businesses with quoting, booking, and calendar management
 </h3>
@@ -32,4 +26,10 @@
 
 ## Demo
 
-You can view a fully working demo at [skedy.io](https://skedy.io/).
+<p align="center">
+  <a href="https://skedy.io/">
+    <img width="200" src="https://lucasxueportfolio.netlify.app/blog/skedy/skedy-whatsapp-booking.png" alt="Skedy demo">
+  </a>
+</p>
+
+
