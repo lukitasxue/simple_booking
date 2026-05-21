@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://skedy.io/">
-    <img width="200" src="https://skedy.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FSkedyLogo.038dc846.png&w=1080&q=75" alt="Skedy Logo">
+    <img width="200" src="https://lucasxueportfolio.netlify.app/blog/skedy/skedy-whatsapp-booking.png" alt="Skedy demo">
   </a>
 </p>
 
